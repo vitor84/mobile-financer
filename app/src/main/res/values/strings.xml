@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Mobile Financer</string>
+
+    <string name="create_operation_description">Description</string>
+    <string name="create_operation_date">Date</string>
+    <string name="create_operation_settlement_date">Settlement date</string>
+    <string name="create_operation_instalments">Instalments</string>
+    <string name="create_operation_amount">Amount</string>
+
+    <string name="menu_activity_main_create_operation">Create operation</string>
+
+    <string name="common_ok">Ok</string>
+    <string name="common_cancel">Cancel</string>
+</resources>

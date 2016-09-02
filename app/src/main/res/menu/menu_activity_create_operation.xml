@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_activity_create_operation_ok"
+        android:title="@string/common_ok" />
+
+    <item
+        android:id="@+id/menu_activity_create_operation_cancel"
+        android:title="@string/common_cancel" />
+</menu>
