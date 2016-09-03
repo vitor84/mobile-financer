@@ -74,7 +74,7 @@ public class CostsFragment extends Fragment
         getDescriptionTextView().setText(model.getDescription());
         getDateTextView().setText(model.getCreationDate().toString());
         getSettlementTextView().setText(model.getSettlementDate().toString());
-        getInstalmentsTextView().setText(model.getInstalments());
+        getInstalmentsTextView().setText(String.valueOf(model.getInstalments()));
         getAmountTextView().setText(String.valueOf(model.getAmount()));
     }
 }
