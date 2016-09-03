@@ -15,7 +15,7 @@ import br.com.dotnext.financer.helpers.FormHelper;
 import br.com.dotnext.financer.models.CreateOperationModel;
 
 public class CreateOperationActivity extends Activity {
-    private static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
+    public static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
 
     private EditText descriptionEditText;
     private EditText settlementEditText;
@@ -45,6 +45,7 @@ public class CreateOperationActivity extends Activity {
                 Intent intentResult = new Intent();
                 try {
                     intentResult.putExtra(CREATE_OPERATION_EXTRA_IDENTIFIER, buildModel());
+                    setResult(Activity.RESULT_OK, intentResult);
                     finish();
                 } catch (ParseException e) {
                     e.printStackTrace();
