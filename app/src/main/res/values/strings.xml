@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Mobile Financer</string>
 
+    <string name="costs_fragment_title">Costs</string>
+    <string name="earns_fragment_title">Earns</string>
+
     <string name="create_operation_description">Description</string>
     <string name="create_operation_date">Date</string>
     <string name="create_operation_settlement_date">Settlement date</string>
