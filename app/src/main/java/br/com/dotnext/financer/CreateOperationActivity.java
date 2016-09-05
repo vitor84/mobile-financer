@@ -14,19 +14,27 @@ import java.util.Date;
 import br.com.dotnext.financer.helpers.FormHelper;
 import br.com.dotnext.financer.models.CreateOperationModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CreateOperationActivity extends Activity {
     public static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
 
-    private EditText descriptionEditText;
-    private EditText settlementEditText;
-    private EditText dateEditText;
-    private EditText instalmentsEditText;
-    private EditText amountEditText;
+    @BindView(R.id.create_operation_description) EditText descriptionEditText;
+
+    @BindView(R.id.create_operation_settlement_date) EditText settlementEditText;
+
+    @BindView(R.id.create_operation_date) EditText dateEditText;
+
+    @BindView(R.id.create_operation_instalments) EditText instalmentsEditText;
+
+    @BindView(R.id.create_operation_amount) EditText amountEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_operation);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -62,11 +70,11 @@ public class CreateOperationActivity extends Activity {
     }
 
     private CreateOperationModel buildModel() throws ParseException {
-        String description = FormHelper.getStringForEditText(getDescriptionEditText());
-        double amount = FormHelper.getDoubleForEditText(getAmountEditText());
-        Date date = FormHelper.getDateForEditText(getDateEditText());
-        Date settlement = FormHelper.getDateForEditText(getSettlementEditText());
-        int instalments = FormHelper.getIntForEditText(getInstalmentsEditText());
+        String description = FormHelper.getStringForEditText(descriptionEditText);
+        double amount = FormHelper.getDoubleForEditText(amountEditText);
+        Date date = FormHelper.getDateForEditText(dateEditText);
+        Date settlement = FormHelper.getDateForEditText(settlementEditText);
+        int instalments = FormHelper.getIntForEditText(instalmentsEditText);
 
         CreateOperationModel model = new CreateOperationModel();
         model.setDescription(description);
@@ -76,35 +84,5 @@ public class CreateOperationActivity extends Activity {
         model.setInstalments(instalments);
 
         return model;
-    }
-
-    private EditText getDescriptionEditText() {
-        if(descriptionEditText == null)
-            descriptionEditText = (EditText) findViewById(R.id.create_operation_description);
-        return descriptionEditText;
-    }
-
-    private EditText getSettlementEditText() {
-        if(settlementEditText == null)
-            settlementEditText = (EditText) findViewById(R.id.create_operation_settlement_date);
-        return settlementEditText;
-    }
-
-    private EditText getDateEditText() {
-        if(dateEditText == null)
-            dateEditText = (EditText) findViewById(R.id.create_operation_date);
-        return dateEditText;
-    }
-
-    private EditText getInstalmentsEditText() {
-        if(instalmentsEditText == null)
-            instalmentsEditText = (EditText) findViewById(R.id.create_operation_instalments);
-        return instalmentsEditText;
-    }
-
-    private EditText getAmountEditText() {
-        if(amountEditText == null)
-            amountEditText = (EditText) findViewById(R.id.create_operation_amount);
-        return amountEditText;
     }
 }

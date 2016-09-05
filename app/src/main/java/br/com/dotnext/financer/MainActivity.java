@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import br.com.dotnext.financer.interfaces.OnCreateOperationListener;
 import br.com.dotnext.financer.models.CreateOperationModel;
+import butterknife.ButterKnife;
 
 public class MainActivity extends Activity {
     private static final int CREATE_OPERATION_REQUEST_CODE = 1000;
@@ -17,15 +18,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_activity_main, menu);
-
         return true;
     }
 
