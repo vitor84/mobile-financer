@@ -1,18 +1,26 @@
 package br.com.dotnext.financer;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.dotnext.financer.enums.OperationTypeEnum;
@@ -23,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateOperationActivity extends AppCompatActivity {
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+    private final Calendar calendar = Calendar.getInstance();
+
     public static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
 
     @BindView(R.id.create_operation_description)
@@ -52,6 +63,9 @@ public class CreateOperationActivity extends AppCompatActivity {
     @BindView(R.id.create_operation_toolbar)
     Toolbar mainToolbar;
 
+    DatePickerDialog operationDatePickerDialog;
+    DatePickerDialog settlementDatePickerDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +74,61 @@ public class CreateOperationActivity extends AppCompatActivity {
 
         setSupportActionBar(mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        init();
+        initOperationDatePicker(mYear, mMonth, mDay);
+        initSettlementDatePicker(mYear, mMonth, mDay);
+    }
+
+    private void init() {
+        instalmentsEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        amountEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+    }
+
+    private void initSettlementDatePicker(int mYear, int mMonth, int mDay) {
+        settlementDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(year, monthOfYear, dayOfMonth);
+                settlementEditText.setText(dateFormatter.format(calendar.getTime()));
+            }
+        }, mYear, mMonth, mDay);
+
+        settlementEditText.setInputType(InputType.TYPE_NULL);
+        settlementEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settlementDatePickerDialog.show();
+                InputMethodManager imputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
+    }
+
+    private void initOperationDatePicker(int mYear, int mMonth, int mDay) {
+        operationDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(year, monthOfYear, dayOfMonth);
+                dateEditText.setText(dateFormatter.format(calendar.getTime()));
+            }
+        }, mYear, mMonth, mDay);
+
+        dateEditText.setInputType(InputType.TYPE_NULL);
+        dateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                operationDatePickerDialog.show();
+                InputMethodManager imputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
     }
 
     @Override

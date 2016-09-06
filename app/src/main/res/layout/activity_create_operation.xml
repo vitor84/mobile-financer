@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/create_operation_date"
             android:inputType="date"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:focusable="false" />
 
         <EditText
             android:id="@+id/create_operation_settlement_date"
@@ -38,7 +39,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/create_operation_settlement_date"
             android:inputType="date"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:focusable="false" />
 
         <EditText
             android:id="@+id/create_operation_instalments"
