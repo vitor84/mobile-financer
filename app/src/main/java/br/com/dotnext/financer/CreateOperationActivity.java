@@ -7,12 +7,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.text.ParseException;
 import java.util.Date;
 
+import br.com.dotnext.financer.enums.OperationTypeEnum;
 import br.com.dotnext.financer.helpers.FormHelper;
-import br.com.dotnext.financer.models.CreateOperationModel;
+import br.com.dotnext.financer.models.OperationModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,15 +23,30 @@ import butterknife.ButterKnife;
 public class CreateOperationActivity extends Activity {
     public static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
 
-    @BindView(R.id.create_operation_description) EditText descriptionEditText;
+    @BindView(R.id.create_operation_description)
+    EditText descriptionEditText;
 
-    @BindView(R.id.create_operation_settlement_date) EditText settlementEditText;
+    @BindView(R.id.create_operation_settlement_date)
+    EditText settlementEditText;
 
-    @BindView(R.id.create_operation_date) EditText dateEditText;
+    @BindView(R.id.create_operation_date)
+    EditText dateEditText;
 
-    @BindView(R.id.create_operation_instalments) EditText instalmentsEditText;
+    @BindView(R.id.create_operation_instalments)
+    EditText instalmentsEditText;
 
-    @BindView(R.id.create_operation_amount) EditText amountEditText;
+    @BindView(R.id.create_operation_amount)
+    EditText amountEditText;
+
+    @BindView(R.id.create_operation_type_costs_radioButton)
+    RadioButton costsRadioButton;
+
+    @BindView(R.id.create_operation_type_earns_radioButton)
+    RadioButton earnsRadioButton;
+
+    @BindView(R.id.create_operation_type_radio_group)
+    RadioGroup operationTypeRadioGroup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +87,28 @@ public class CreateOperationActivity extends Activity {
         return handled;
     }
 
-    private CreateOperationModel buildModel() throws ParseException {
+    private OperationModel buildModel() throws ParseException {
         String description = FormHelper.getStringForEditText(descriptionEditText);
         double amount = FormHelper.getDoubleForEditText(amountEditText);
         Date date = FormHelper.getDateForEditText(dateEditText);
         Date settlement = FormHelper.getDateForEditText(settlementEditText);
         int instalments = FormHelper.getIntForEditText(instalmentsEditText);
 
-        CreateOperationModel model = new CreateOperationModel();
+        OperationModel model = new OperationModel();
         model.setDescription(description);
         model.setCreationDate(date);
         model.setSettlementDate(settlement);
         model.setAmount(amount);
         model.setInstalments(instalments);
+
+        switch (operationTypeRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.create_operation_type_costs_radioButton:
+                model.setType(OperationTypeEnum.COSTS);
+                break;
+            case R.id.create_operation_type_earns_radioButton:
+                model.setType(OperationTypeEnum.EARNS);
+                break;
+        }
 
         return model;
     }

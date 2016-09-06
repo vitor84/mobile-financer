@@ -3,12 +3,15 @@ package br.com.dotnext.financer.models;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CreateOperationModel implements Serializable {
+import br.com.dotnext.financer.enums.OperationTypeEnum;
+
+public class OperationModel implements Serializable {
     private String description;
     private Date creationDate;
     private Date settlementDate;
     private int instalments;
     private double amount;
+    private OperationTypeEnum operationType;
 
     public String getDescription() {
         return description;
@@ -48,5 +51,13 @@ public class CreateOperationModel implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public OperationTypeEnum getOperationType() {
+        return operationType;
+    }
+
+    public void setType(OperationTypeEnum operationType) {
+        this.operationType = operationType;
     }
 }

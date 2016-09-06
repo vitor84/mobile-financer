@@ -1,7 +1,9 @@
 package br.com.dotnext.financer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -9,13 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import br.com.dotnext.financer.adapters.OperationPagerAdapter;
+import br.com.dotnext.financer.fragments.CostsFragment;
+import br.com.dotnext.financer.fragments.EarnsFragment;
+import br.com.dotnext.financer.models.OperationModel;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends FragmentActivity {
     private static final int CREATE_OPERATION_REQUEST_CODE = 1000;
-
     private OperationPagerAdapter pagerAdapter;
+
+    private Fragment costsFragment;
+    private Fragment earnsFragment;
 
     @BindView(R.id.activity_main_view_pager_id) ViewPager viewPager;
 
@@ -26,7 +34,13 @@ public class MainActivity extends FragmentActivity {
 
         ButterKnife.bind(this);
 
-        pagerAdapter = new OperationPagerAdapter(getSupportFragmentManager(), getResources());
+        this.costsFragment = new CostsFragment();
+        this.earnsFragment = new EarnsFragment();
+
+        pagerAdapter = new OperationPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.add(getResources().getString(R.string.costs_fragment_title), costsFragment);
+        pagerAdapter.add(getResources().getString(R.string.earns_fragment_title), earnsFragment);
+
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -35,6 +49,29 @@ public class MainActivity extends FragmentActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_activity_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CREATE_OPERATION_REQUEST_CODE:
+                if(resultCode == Activity.RESULT_OK) {
+                    OperationModel model =
+                            (OperationModel) data.getSerializableExtra(
+                                    CreateOperationActivity.CREATE_OPERATION_EXTRA_IDENTIFIER);
+
+                    switch (model.getOperationType()) {
+                        case COSTS:
+                            ((OnOperationCreatedListener)this.costsFragment).onOperationCreated(model);
+                            break;
+                        case EARNS:
+                            ((OnOperationCreatedListener)this.earnsFragment).onOperationCreated(model);
+                            break;
+                    }
+                }
+                break;
+            default:
+        }
     }
 
     @Override
@@ -51,27 +88,5 @@ public class MainActivity extends FragmentActivity {
         }
 
         return handled;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case MainActivity.CREATE_OPERATION_REQUEST_CODE:
-                onCreateOperationHandler(data);
-                break;
-            default:
-                return;
-        }
-    }
-
-    private void onCreateOperationHandler(Intent data) {
-//        CreateOperationModel model =
-//                (CreateOperationModel) data.getSerializableExtra(
-//                        CreateOperationActivity.CREATE_OPERATION_EXTRA_IDENTIFIER);
-//
-//        Fragment costsFragment =
-//                getSupportFragmentManager().findFragmentById(R.id.activity_main_cost_fragment_id);
-//
-//        ((OnCreateOperationListener)costsFragment).onCreateOperation(model);
     }
 }
