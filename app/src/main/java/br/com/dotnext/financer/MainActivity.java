@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,19 +14,23 @@ import android.view.MenuItem;
 import br.com.dotnext.financer.adapters.OperationPagerAdapter;
 import br.com.dotnext.financer.fragments.CostsFragment;
 import br.com.dotnext.financer.fragments.EarnsFragment;
+import br.com.dotnext.financer.interfaces.OnOperationCreatedListener;
 import br.com.dotnext.financer.models.OperationModel;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
     private static final int CREATE_OPERATION_REQUEST_CODE = 1000;
     private OperationPagerAdapter pagerAdapter;
 
     private Fragment costsFragment;
     private Fragment earnsFragment;
 
-    @BindView(R.id.activity_main_view_pager_id) ViewPager viewPager;
+    @BindView(R.id.activity_main_view_pager_id)
+    ViewPager viewPager;
+
+    @BindView(R.id.main_toolbar)
+    Toolbar mainToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class MainActivity extends FragmentActivity {
         pagerAdapter.add(getResources().getString(R.string.earns_fragment_title), earnsFragment);
 
         viewPager.setAdapter(pagerAdapter);
+
+        setSupportActionBar(mainToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override

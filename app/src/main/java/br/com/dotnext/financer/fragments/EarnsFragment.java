@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import br.com.dotnext.financer.OnOperationCreatedListener;
+import br.com.dotnext.financer.interfaces.OnOperationCreatedListener;
 import br.com.dotnext.financer.R;
 import br.com.dotnext.financer.adapters.OperationArrayAdapter;
 import br.com.dotnext.financer.models.OperationModel;

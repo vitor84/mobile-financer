@@ -3,6 +3,8 @@ package br.com.dotnext.financer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +22,7 @@ import br.com.dotnext.financer.models.OperationModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateOperationActivity extends Activity {
+public class CreateOperationActivity extends AppCompatActivity {
     public static String CREATE_OPERATION_EXTRA_IDENTIFIER = "E593AAD6-A8A7-48A4-B4FE-25630E1AE74F";
 
     @BindView(R.id.create_operation_description)
@@ -47,12 +49,17 @@ public class CreateOperationActivity extends Activity {
     @BindView(R.id.create_operation_type_radio_group)
     RadioGroup operationTypeRadioGroup;
 
+    @BindView(R.id.create_operation_toolbar)
+    Toolbar mainToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_operation);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mainToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override

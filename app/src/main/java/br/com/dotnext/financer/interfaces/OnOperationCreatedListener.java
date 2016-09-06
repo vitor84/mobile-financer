@@ -1,4 +1,4 @@
-package br.com.dotnext.financer;
+package br.com.dotnext.financer.interfaces;
 
 import br.com.dotnext.financer.models.OperationModel;
 
